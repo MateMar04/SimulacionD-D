@@ -7,6 +7,9 @@ public class Batalla {
     public Batalla(Personaje peleador1, Personaje peleador2) {
         this.peleador1 = peleador1;
         this.peleador2 = peleador2;
+
+        peleador1.vidaReset();
+        peleador2.vidaReset();
     }
 
     public void pelear() {

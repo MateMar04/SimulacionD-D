@@ -8,7 +8,7 @@ public abstract class Personaje {
     private final int constitucion;
     private int numVictorias;
     private int numBatallas;
-    private Raza raza;
+    private Raza raza; //evaluar borrar
 
     private final int habilidadFuerza;
     private final int habilidadAgilidad;
@@ -78,6 +78,10 @@ public abstract class Personaje {
                 ", Agilidad: " + habilidadAgilidad +
                 " ---> Batallas: " + numBatallas +
                 "/Victorias: " + numVictorias;
+    }
+
+    public int vidaReset() {
+        return this.vida = 15 + hability(constitucion);
     }
 
 }
