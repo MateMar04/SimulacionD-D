@@ -24,11 +24,9 @@ public class Batalla {
         }
         if (peleador1.seguisVivo()) {
             peleador1.sumarVictoria();
-            Personaje ganador = peleador1;
             System.out.println("Gano " + peleador1.nombre);
         } else {
             peleador2.sumarVictoria();
-            Personaje ganador = peleador2;
             System.out.println("Gano " + peleador2.nombre);
         }
     }

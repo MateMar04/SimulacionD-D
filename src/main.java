@@ -29,9 +29,6 @@ public class main {
 
         MyScanner in = new MyScanner();
 
-        Batalla batalla = new Batalla(soldado, jedi);
-
-
         Personaje personaje;
 
         Personaje peleador1;

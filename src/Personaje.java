@@ -61,6 +61,11 @@ public abstract class Personaje {
                 .map(i -> i + danioCritico)
                 .orElse(0);
 
+        if (esCritico) {
+            System.out.println("+++Daño critico+++");
+        }
+
+
         otro.vida -= danio;
         System.out.println(this.nombre + " le hizo " + danio + " de daño a " + otro.nombre);
     }
@@ -75,8 +80,4 @@ public abstract class Personaje {
                 "/Victorias: " + numVictorias;
     }
 
-    public static Personaje crear(String nombre, Dado dado, Arma arma, Raza raza) {
-        return new Personaje(nombre, dado, arma, raza) {
-        };
-    }
 }

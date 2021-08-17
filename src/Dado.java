@@ -8,9 +8,6 @@ public class Dado {
 
     public int rollear() {
         int resultado = (int) Math.floor(Math.random() * caras) + 1;
-        //System.out.println("El dado dice: " + resultado);
         return resultado;
     }
-
-
 }
