@@ -9,21 +9,27 @@ public class Batalla {
         this.peleador2 = peleador2;
     }
 
-    public Personaje pelear() {
+    public void pelear() {
         peleador1.sumarBatalla();
         peleador2.sumarBatalla();
 
         while (peleador1.seguisVivo() && peleador2.seguisVivo()) {
-            peleador1.atacar(peleador2);
+            if (peleador1.getAgilidad() > peleador2.getAgilidad()) {
+                peleador1.atacar(peleador2);
+                peleador2.atacar(peleador1);
+            } else {
+                peleador2.atacar(peleador1);
+                peleador1.atacar(peleador2);
+            }
         }
         if (peleador1.seguisVivo()) {
             peleador1.sumarVictoria();
             Personaje ganador = peleador1;
-            return ganador;
+            System.out.println("Gano " + peleador1.nombre);
         } else {
             peleador2.sumarVictoria();
             Personaje ganador = peleador2;
-            return ganador;
+            System.out.println("Gano " + peleador2.nombre);
         }
     }
 }

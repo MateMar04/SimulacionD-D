@@ -3,6 +3,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
+import java.util.regex.Pattern;
 
 public class main {
     public static void main(String[] args) {
@@ -28,28 +29,47 @@ public class main {
 
         MyScanner in = new MyScanner();
 
-        int opcion = in.scanOption("Batalla de Titanes", "Crear", "Elegir personaje");
+        Batalla batalla = new Batalla(soldado, jedi);
+
 
         Personaje personaje;
 
-        switch (opcion) {
-            case 1:
-                String nombre = in.scanString("Escriba el nombre del personaje");
-                Arma arma = in.scanOption("Seleccione el arma para su personaje", blaster, desintegracion, lightsaber, maldicion);
-                Raza raza = in.scanOption("Seleccione la Raza de su personaje", droide, duende, humano, sangheili);
-                personaje = in.scanOption("Seleccione el tipo de personaje",
-                        new Cazarecompenzas(nombre, d20, arma, raza),
-                        new HermanaDeLaNoche(nombre, d20, arma, raza),
-                        new Soldado(nombre, d20, arma, raza),
-                        new Jedi(nombre, d20, arma, raza));
-                personajes.add(personaje);
-                break;
-            case 2:
-                personaje = in.scanOption("Seleccione el tipo de personaje", personajes.toArray(Personaje[]::new));
+        Personaje peleador1;
+        Personaje peleador2;
 
-        }
+        boolean seguir = true;
 
-        Batalla batalla = new Batalla(soldado, jedi);
+
+        do {
+            int opcion = in.scanOption("Batalla de Titanes", "Crear", "Batalla", "Salir");
+
+            switch (opcion) {
+                case 1:
+                    String nombre = in.scanString("Escriba el nombre del personaje");
+                    Arma arma = in.scanOption("Seleccione el arma para su personaje", blaster, desintegracion, lightsaber, maldicion);
+                    Raza raza = in.scanOption("Seleccione la raza de su personaje", droide, duende, humano, sangheili);
+                    personaje = in.scanOption("Seleccione el tipo de personaje",
+                            new Cazarecompenzas(nombre, d20, arma, raza),
+                            new HermanaDeLaNoche(nombre, d20, arma, raza),
+                            new Soldado(nombre, d20, arma, raza),
+                            new Jedi(nombre, d20, arma, raza));
+                    personajes.add(personaje);
+                    break;
+                case 2:
+                    peleador1 = in.scanOption("Seleccione el peleador 1", personajes.toArray(Personaje[]::new));
+                    peleador2 = in.scanOption("Seleccione el peleador 2", personajes.toArray(Personaje[]::new));
+                    Batalla simulacion = new Batalla(peleador1, peleador2);
+                    simulacion.pelear();
+                    break;
+                case 3:
+                    seguir = false;
+                    break;
+                default:
+                    System.out.println("Opcion invalida");
+                    break;
+            }
+        } while (seguir);
+
     }
 
     private static class MyScanner {
@@ -62,7 +82,7 @@ public class main {
         }
 
         public <T> T scanOption(String mensaje, T... opciones) {
-            return opciones[scanOption(mensaje, Arrays.stream(opciones).map(Object::getClass).map(Class::getSimpleName).toArray(String[]::new))];
+            return opciones[scanOption(mensaje, Arrays.stream(opciones).map(o -> o.getClass().getSimpleName() + " ---> " + o).toArray(String[]::new)) - 1];
         }
 
         public int scanOption(String mensaje, String... opciones) {
@@ -79,7 +99,7 @@ public class main {
                     out.println("Opcion " + opcion + " no valida.");
                 }
             } while (!opcionValida);
-            return opcion - 1;
+            return opcion;
         }
 
         private void printMensaje(String mensaje) {
@@ -88,7 +108,11 @@ public class main {
 
         public String scanString(String mensaje) {
             printMensaje(mensaje);
-            return sc.next();
+            Pattern delimiter = sc.delimiter();
+            sc.useDelimiter("\\r\\n|[\\n\\x0B\\x0C\\r\\u0085\\u2028\\u2029]"); // https://stackoverflow.com/questions/4058912/scanner-doesnt-read-whole-sentence-difference-between-next-and-nextline-o
+            String s = sc.next();
+            sc.useDelimiter(delimiter);
+            return s;
         }
     }
 }

@@ -23,7 +23,7 @@ public abstract class Personaje {
         habilidadFuerza = hability(fuerza);
         habilidadAgilidad = hability(agilidad);
 
-        this.vida = 100 + hability(constitucion);
+        this.vida = 15 + hability(constitucion);
 
     }
 
@@ -52,21 +52,27 @@ public abstract class Personaje {
         Dado d20 = new Dado(20);
         Dado d4 = new Dado(4);
 
-        if (agilidad > otro.agilidad) {
+        int valord20 = d20.rollear();
+        boolean esCritico = valord20 == 20;
+        int danioCritico = esCritico ? d4.rollear() : 0;
 
-            int valord20 = d20.rollear();
-            boolean esCritico = valord20 == 20;
-            int danioCritico = esCritico ? d4.rollear() : 0;
+        var danio = arma.disparar(valord20)
+                .map(i -> i + habilidadFuerza)
+                .map(i -> i + danioCritico)
+                .orElse(0);
 
-            var danio = arma.disparar(valord20)
-                    .map(i -> i + habilidadFuerza)
-                    .map(i -> i + danioCritico)
-                    .orElse(0);
+        otro.vida -= danio;
+        System.out.println(this.nombre + " le hizo " + danio + " de daño a " + otro.nombre);
+    }
 
-            otro.vida -= danio;
-        } else {
-            otro.atacar(this);
-        }
+    @Override
+    public String toString() {
+        return "Nombre: " + nombre +
+                ", Vida: " + vida +
+                ", Fuerza: " + habilidadFuerza +
+                ", Agilidad: " + habilidadAgilidad +
+                " ---> Batallas: " + numBatallas +
+                "/Victorias: " + numVictorias;
     }
 
     public static Personaje crear(String nombre, Dado dado, Arma arma, Raza raza) {

@@ -17,4 +17,11 @@ public abstract class Raza {
     public int getModConstitucion() {
         return modConstitucion;
     }
+
+    @Override
+    public String toString() {
+        return "Fuerza: " + modFuerza +
+                ", Agilidad: " + modAgilidad +
+                ", Constitucion: " + modConstitucion;
+    }
 }

@@ -7,6 +7,12 @@ public class Blaster extends Arma {
 
     @Override
     protected boolean acerto(int valorDeAcierto) {
-        return (List.of(1, 3, 5, 7, 9, 12, 14, 16, 18, 20).contains(valorDado()));
+        return (List.of(1, 3, 5, 7, 9, 10, 12, 18, 20).contains(valorDado()));
+    }
+
+    @Override
+    public String toString() {
+        List<Integer> numerosDeAcierto = List.of(1, 3, 5, 7, 9, 10, 12, 18, 20);
+        return "Numeros de acierto: " + numerosDeAcierto;
     }
 }
