@@ -1,15 +1,13 @@
 public abstract class Personaje {
 
     private final Arma arma;
-    protected String nombre;
+    private String nombre;
     private int vida;
     private final int fuerza;
     private final int agilidad;
     private final int constitucion;
     private int numVictorias;
     private int numBatallas;
-    private Raza raza; //evaluar borrar
-
     private final int habilidadFuerza;
     private final int habilidadAgilidad;
 
@@ -20,15 +18,19 @@ public abstract class Personaje {
         this.constitucion = dado.rollear() + raza.getModConstitucion();
         this.arma = arma;
 
-        habilidadFuerza = hability(fuerza);
-        habilidadAgilidad = hability(agilidad);
+        habilidadFuerza = habilidades(fuerza);
+        habilidadAgilidad = habilidades(agilidad);
 
-        this.vida = 15 + hability(constitucion);
+        this.vida = 15 + habilidades(constitucion);
 
     }
 
     public int getAgilidad() {
         return agilidad;
+    }
+
+    public String getNombre() {
+        return nombre;
     }
 
     public void sumarVictoria() {
@@ -43,7 +45,7 @@ public abstract class Personaje {
         return vida > 0;
     }
 
-    private static int hability(int n) {
+    private static int habilidades(int n) {
         return (n - 10) / 2;
     }
 
@@ -81,7 +83,7 @@ public abstract class Personaje {
     }
 
     public int vidaReset() {
-        return this.vida = 15 + hability(constitucion);
+        return this.vida = 15 + habilidades(constitucion);
     }
 
 }

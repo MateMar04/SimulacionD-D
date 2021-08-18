@@ -2,7 +2,7 @@ import java.util.Optional;
 
 public abstract class Arma {
 
-    private final String nombre; // Evaluar borrar
+    private final String nombre;
     private final Dado d6 = new Dado(6);
 
     protected final int valorDado() {

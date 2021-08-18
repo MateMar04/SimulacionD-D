@@ -27,10 +27,10 @@ public class Batalla {
         }
         if (peleador1.seguisVivo()) {
             peleador1.sumarVictoria();
-            System.out.println("Gano " + peleador1.nombre);
+            System.out.println("Gano " + peleador1.getNombre());
         } else {
             peleador2.sumarVictoria();
-            System.out.println("Gano " + peleador2.nombre);
+            System.out.println("Gano " + peleador2.getNombre());
         }
     }
 }
